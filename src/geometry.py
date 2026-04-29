@@ -1,6 +1,10 @@
 import numpy as np
 from vector_math import rotate_vectors
 
+FOCUS_DIST = 0.5e-3 #m - Bottom clearance (truncation) of the mirror.
+HOLE_DIAM = 0.6e-3 #m - Diameter of the top/central aperture of the mirror.
+X_MAX = 13.25e-3 #m - The maximum physical forward length of the mirror along the x-axis.
+
 def find_intersection(origins, directions, f=2.5e-3):
     """
     Calculates the intersection points of photon rays with the paraboloid mirror.
@@ -47,18 +51,14 @@ def find_intersection(origins, directions, f=2.5e-3):
 
     hit_points = origins + t_hit[:, np.newaxis] * directions
 
-    focus_dist = 0.5e-3
-    hole_diam = 0.6e-3
-    x_max = 13.25e-3
-
     hit_x = hit_points[:, 0]
     hit_y = hit_points[:, 1]
     hit_z = hit_points[:, 2]
 
     # Spatial mask: Constrains the infinite mathematical paraboloid to real physical dimensions
-    valid_mask = (hit_z >= focus_dist) & \
-                 ((hit_x**2 + hit_y**2) >= (hole_diam / 2)**2) & \
-                 (hit_x <= (-f + x_max))
+    valid_mask = (hit_z >= FOCUS_DIST) & \
+                 ((hit_x**2 + hit_y**2) >= (HOLE_DIAM / 2)**2) & \
+                 (hit_x <= (-f + X_MAX))
                  # 1. Truncates the bottom of the mirror
                  # 2. Accounts for the central aperture (e-beam hole)
                  # 3. Limits the maximum forward length of the mirror
