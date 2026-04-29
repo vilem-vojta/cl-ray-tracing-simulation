@@ -69,7 +69,7 @@ def multiple_simulations(
                 n_photons,
                 x_det,
                 det_radius,
-                starting_position=[x, y, 0],
+                starting_position=(x, y, 0),
                 m_tilt_x_deg=m_tilt_x_deg,
                 m_tilt_y_deg=m_tilt_y_deg,
                 m_tilt_z_deg=m_tilt_z_deg,
