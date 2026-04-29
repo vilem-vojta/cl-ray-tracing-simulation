@@ -5,7 +5,7 @@ from vector_math import emission, rotate_vectors
 
 def run_simulation(n_photons, x_det,
                    det_radius,
-                   starting_position=[0, 0, 0],
+                   starting_position=(0, 0, 0),
                    m_tilt_x_deg=0,
                    m_tilt_y_deg=0,
                    m_tilt_z_deg=0, 
@@ -56,7 +56,7 @@ def run_simulation(n_photons, x_det,
     
     efficiency_hit = len(hit_points) / n_photons * 100
     if verbose:
-        print(f"Zrcadlo trefilo {len(hit_points)} fotonů - {efficiency_hit:.2f} %.")
+        print(f"Mirror hit by {len(hit_points)} photons - {efficiency_hit:.2f} %.")
 
     # Early exit if the beam entirely misses the mirror
     if len(hit_points) == 0:
@@ -73,7 +73,7 @@ def run_simulation(n_photons, x_det,
     # Final detection efficiency calculation
     efficiency = (len(y_final) / n_photons) * 100
     if verbose:
-        print(f"Na detektor dopadlo {len(y_final)} fotonů. Celková účinnost: {efficiency:.2f} %")
+        print(f"Detector hit by {len(y_final)} photons. Total efficiency: {efficiency:.2f} %")
 
     # Render the 2D scatter plot representing the physical detector surface
     if create_plot:
